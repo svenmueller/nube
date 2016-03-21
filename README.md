@@ -1,6 +1,6 @@
 # nube CLI
 
-[![Build Status](https://travis-ci.org/svenmueller/nube.svg)](https://travis-ci.org/svenmueller/nube.svg?branch=master)
+[![Build Status](https://travis-ci.org/svenmueller/nube.svg?branch=master)](https://travis-ci.org/svenmueller/nube)
 
 `nube` is a CLI for managing commercetools cloud resources on Rackspace/AWS. The word "nube" is taken from the spanish language and simply means "cloud".
 
