@@ -8,11 +8,11 @@ import (
   "strings"
   "os"
 
-  "github.com/digitalocean/doctl/Godeps/_workspace/src/github.com/codegangsta/cli"
-  "github.com/digitalocean/doctl/Godeps/_workspace/src/github.com/rackspace/gophercloud"
-  "github.com/digitalocean/doctl/Godeps/_workspace/src/github.com/rackspace/gophercloud/rackspace"
-  "github.com/digitalocean/doctl/Godeps/_workspace/src/github.com/rackspace/gophercloud/pagination"
-  "github.com/digitalocean/doctl/Godeps/_workspace/src/github.com/rackspace/gophercloud/openstack/compute/v2/servers"
+  "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/codegangsta/cli"
+  "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud"
+  "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/rackspace"
+  "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/pagination"
+  "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/openstack/compute/v2/servers"
   
 //  "github.com/mitchellh/goamz/aws"
 //  "github.com/mitchellh/goamz/route53"

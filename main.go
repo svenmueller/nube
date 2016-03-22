@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-  "github.com/digitalocean/doctl/Godeps/_workspace/src/github.com/codegangsta/cli"
+  "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/codegangsta/cli"
 )
 
 const AppVersion = "0.0.1"

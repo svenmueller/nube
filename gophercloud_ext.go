@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-  "github.com/digitalocean/doctl/Godeps/_workspace/src/github.com/rackspace/gophercloud"
-  "github.com/digitalocean/doctl/Godeps/_workspace/src/github.com/rackspace/gophercloud/pagination"
-  "github.com/digitalocean/doctl/Godeps/_workspace/src/github.com/rackspace/gophercloud/openstack/compute/v2/servers"
+  "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud"
+  "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/pagination"
+  "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/openstack/compute/v2/servers"
 )
 
 func FindServerByName(serviceClient *gophercloud.ServiceClient, name string) (*servers.Server, error) {
