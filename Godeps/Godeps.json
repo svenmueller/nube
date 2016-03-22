@@ -1,0 +1,100 @@
+{
+	"ImportPath": "github.com/svenmueller/nube",
+	"GoVersion": "go1.4",
+	"GodepVersion": "v60",
+	"Deps": [
+		{
+			"ImportPath": "github.com/codegangsta/cli",
+			"Comment": "1.2.0-224-gaca5b04",
+			"Rev": "aca5b047ed14d17224157c3434ea93bf6cdaadee"
+		},
+		{
+			"ImportPath": "github.com/docker/docker/pkg/namesgenerator",
+			"Comment": "v1.4.1-10982-g722f06d",
+			"Rev": "722f06dae3fe18865978d0f7f531ceea15b4f51a"
+		},
+		{
+			"ImportPath": "github.com/docker/docker/pkg/random",
+			"Comment": "v1.4.1-10982-g722f06d",
+			"Rev": "722f06dae3fe18865978d0f7f531ceea15b4f51a"
+		},
+		{
+			"ImportPath": "github.com/mitchellh/mapstructure",
+			"Rev": "d2dd0262208475919e1a362f675cfc0e7c10e905"
+		},
+		{
+			"ImportPath": "github.com/rackspace/gophercloud",
+			"Comment": "v1.0.0-842-g8992d74",
+			"Rev": "8992d7483a06748dea706e4716d042a4a9e73918"
+		},
+		{
+			"ImportPath": "github.com/rackspace/gophercloud/openstack",
+			"Comment": "v1.0.0-842-g8992d74",
+			"Rev": "8992d7483a06748dea706e4716d042a4a9e73918"
+		},
+		{
+			"ImportPath": "github.com/rackspace/gophercloud/openstack/compute/v2/flavors",
+			"Comment": "v1.0.0-842-g8992d74",
+			"Rev": "8992d7483a06748dea706e4716d042a4a9e73918"
+		},
+		{
+			"ImportPath": "github.com/rackspace/gophercloud/openstack/compute/v2/images",
+			"Comment": "v1.0.0-842-g8992d74",
+			"Rev": "8992d7483a06748dea706e4716d042a4a9e73918"
+		},
+		{
+			"ImportPath": "github.com/rackspace/gophercloud/openstack/compute/v2/servers",
+			"Comment": "v1.0.0-842-g8992d74",
+			"Rev": "8992d7483a06748dea706e4716d042a4a9e73918"
+		},
+		{
+			"ImportPath": "github.com/rackspace/gophercloud/openstack/identity/v2/tenants",
+			"Comment": "v1.0.0-842-g8992d74",
+			"Rev": "8992d7483a06748dea706e4716d042a4a9e73918"
+		},
+		{
+			"ImportPath": "github.com/rackspace/gophercloud/openstack/identity/v2/tokens",
+			"Comment": "v1.0.0-842-g8992d74",
+			"Rev": "8992d7483a06748dea706e4716d042a4a9e73918"
+		},
+		{
+			"ImportPath": "github.com/rackspace/gophercloud/openstack/identity/v3/tokens",
+			"Comment": "v1.0.0-842-g8992d74",
+			"Rev": "8992d7483a06748dea706e4716d042a4a9e73918"
+		},
+		{
+			"ImportPath": "github.com/rackspace/gophercloud/openstack/utils",
+			"Comment": "v1.0.0-842-g8992d74",
+			"Rev": "8992d7483a06748dea706e4716d042a4a9e73918"
+		},
+		{
+			"ImportPath": "github.com/rackspace/gophercloud/pagination",
+			"Comment": "v1.0.0-842-g8992d74",
+			"Rev": "8992d7483a06748dea706e4716d042a4a9e73918"
+		},
+		{
+			"ImportPath": "github.com/rackspace/gophercloud/rackspace",
+			"Comment": "v1.0.0-842-g8992d74",
+			"Rev": "8992d7483a06748dea706e4716d042a4a9e73918"
+		},
+		{
+			"ImportPath": "github.com/rackspace/gophercloud/rackspace/identity/v2/tokens",
+			"Comment": "v1.0.0-842-g8992d74",
+			"Rev": "8992d7483a06748dea706e4716d042a4a9e73918"
+		},
+		{
+			"ImportPath": "github.com/rackspace/gophercloud/testhelper",
+			"Comment": "v1.0.0-842-g8992d74",
+			"Rev": "8992d7483a06748dea706e4716d042a4a9e73918"
+		},
+		{
+			"ImportPath": "github.com/rackspace/gophercloud/testhelper/client",
+			"Comment": "v1.0.0-842-g8992d74",
+			"Rev": "8992d7483a06748dea706e4716d042a4a9e73918"
+		},
+		{
+			"ImportPath": "gopkg.in/yaml.v1",
+			"Rev": "9f9df34309c04878acc86042b16630b0f696e1de"
+		}
+	]
+}
