@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/rackspace/gophercloud"
+	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud"
 )
 
 var nilOptions = gophercloud.AuthOptions{}

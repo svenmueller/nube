@@ -1,6 +1,6 @@
 package tokens
 
-import "github.com/rackspace/gophercloud"
+import "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud"
 
 // CreateURL generates the URL used to create new Tokens.
 func CreateURL(client *gophercloud.ServiceClient) string {

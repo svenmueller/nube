@@ -13,11 +13,7 @@ import (
   "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/rackspace"
   "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/pagination"
   "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/openstack/compute/v2/servers"
-  
-//  "github.com/mitchellh/goamz/aws"
-//  "github.com/mitchellh/goamz/route53"
-  
-  "github.com/docker/docker/pkg/namesgenerator"
+  "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/docker/docker/pkg/namesgenerator"
 )
 
 var RackspaceUsername string

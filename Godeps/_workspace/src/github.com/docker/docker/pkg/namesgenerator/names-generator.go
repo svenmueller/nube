@@ -3,7 +3,7 @@ package namesgenerator
 import (
 	"fmt"
 
-	"github.com/docker/docker/pkg/random"
+	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/docker/docker/pkg/random"
 )
 
 var (

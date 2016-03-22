@@ -3,11 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/svenmueller/nube/Godeps/_workspace/src/gopkg.in/yaml.v1"
 	"log"
 	"os"
 	"strings"
 	"text/tabwriter"
-	"gopkg.in/yaml.v1"
 )
 
 type CLIOutput struct {

@@ -8,9 +8,9 @@ import (
 	"path"
 	"reflect"
 
-	"github.com/mitchellh/mapstructure"
-	"github.com/rackspace/gophercloud"
-	"github.com/rackspace/gophercloud/pagination"
+	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/mitchellh/mapstructure"
+	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud"
+	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/pagination"
 )
 
 type serverResult struct {
