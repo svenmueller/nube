@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-  "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/codegangsta/cli"
+	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/codegangsta/cli"
 )
 
 const AppVersion = "0.0.1"
@@ -39,7 +39,7 @@ func buildApp() *cli.App {
 		cli.BoolFlag{Name: "debug,d", Usage: "Turn on debug output."},
 	}
 	app.Before = func(ctx *cli.Context) error {
-    
+
 		if ctx.String("api-key") != "" {
 			APIKey = ctx.String("api-key")
 		}
