@@ -39,7 +39,7 @@ var DNSCommand = cli.Command{
 	},
 }
 
-func validateCredentials() {
+func validatDNSRequiredArgs() {
 	if AWSAccessKey == "" {
 		log.Fatal("You must provide the AWS API Access Key via AWS_ACCESS_KEY environment variable or via CLI argument.")
 	}
@@ -51,7 +51,7 @@ func validateCredentials() {
 
 func dnsHostedZonesList(ctx *cli.Context) {
 
-	validateCredentials()
+	validatDNSRequiredArgs()
 
 	provider := credentials.StaticProvider{
 		Value: credentials.Value{

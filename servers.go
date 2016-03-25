@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -20,8 +19,6 @@ var RackspaceUsername string
 var RackspaceAPIKey string
 var RackspaceRegionName string
 
-var RackspaceServiceClient *gophercloud.ServiceClient
-
 var ServersCommand = cli.Command{
 	Name:    "servers",
 	Aliases: []string{"s"},
@@ -32,20 +29,6 @@ var ServersCommand = cli.Command{
 		cli.StringFlag{Name: "rackspace-region-name", Value: "LON", Usage: "The Rackspace region name.", EnvVar: "RACKSPACE_REGION_NAME", Destination: &RackspaceRegionName},
 	},
 	Action: serversList,
-	Before: func(ctx *cli.Context) error {
-
-		if RackspaceUsername == "" {
-			return errors.New("You must provide the Rackspace API username via RACKSPACE_USERNAME environment variable or via CLI argument.")
-		}
-
-		if RackspaceAPIKey == "" {
-			return errors.New("You must provide the Rackspace API Key via RACKSPACE_API_KEY environment variable or via CLI argument.")
-		}
-
-		RackspaceServiceClient = newServiceClient(RackspaceUsername, RackspaceAPIKey, RackspaceRegionName)
-
-		return nil
-	},
 	Subcommands: []cli.Command{
 		{
 			Name:    "list",
@@ -83,6 +66,16 @@ var ServersCommand = cli.Command{
 	},
 }
 
+func validatServersRequiredArgs() {
+	if RackspaceUsername == "" {
+		log.Fatal("You must provide the Rackspace API username via RACKSPACE_USERNAME environment variable or via CLI argument.")
+	}
+
+	if RackspaceAPIKey == "" {
+		log.Fatal("You must provide the Rackspace API Key via RACKSPACE_API_KEY environment variable or via CLI argument.")
+	}
+}
+
 func newProviderClient(username string, apiKey string) *gophercloud.ProviderClient {
 	authOpts := gophercloud.AuthOptions{
 		Username: username,
@@ -115,12 +108,16 @@ func newServiceClient(username string, apiKey string, region string) *gopherclou
 
 func serversList(ctx *cli.Context) {
 
+	validatServersRequiredArgs()
+
 	// We have the option of filtering the server list. If we want the full
 	// collection, leave it as an empty struct
 	opts := servers.ListOpts{}
 
+	rackspaceServiceClient := newServiceClient(RackspaceUsername, RackspaceAPIKey, RackspaceRegionName)
+
 	// Retrieve a pager (i.e. a paginated collection)
-	pager := servers.List(RackspaceServiceClient, opts)
+	pager := servers.List(rackspaceServiceClient, opts)
 
 	// Define an anonymous function to be executed on each page's iteration
 	err := pager.EachPage(func(page pagination.Page) (bool, error) {
@@ -147,6 +144,8 @@ func serversList(ctx *cli.Context) {
 }
 
 func serversCreate(ctx *cli.Context) {
+
+	validatServersRequiredArgs()
 
 	if len(ctx.Args()) != 1 {
 		log.Fatal("Error: Must provide name for server.")
@@ -182,7 +181,9 @@ func serversCreate(ctx *cli.Context) {
 		userData = ctx.String("user-data")
 	}
 
-	server, err := servers.Create(RackspaceServiceClient, servers.CreateOpts{
+	rackspaceServiceClient := newServiceClient(RackspaceUsername, RackspaceAPIKey, RackspaceRegionName)
+
+	server, err := servers.Create(rackspaceServiceClient, servers.CreateOpts{
 		Name:       serverName,
 		ImageName:  ctx.String("image"),
 		FlavorName: ctx.String("flavor"),
@@ -197,13 +198,13 @@ func serversCreate(ctx *cli.Context) {
 
 	if ctx.Bool("wait-for-active") {
 		log.Println("Waiting for server to be in state 'ACTIVE'.")
-		err = servers.WaitForStatus(RackspaceServiceClient, server.ID, "ACTIVE", 600)
+		err = servers.WaitForStatus(rackspaceServiceClient, server.ID, "ACTIVE", 600)
 
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		server, err = servers.Get(RackspaceServiceClient, server.ID).Extract()
+		server, err = servers.Get(rackspaceServiceClient, server.ID).Extract()
 
 		if err != nil {
 			log.Fatal(err)
@@ -214,13 +215,18 @@ func serversCreate(ctx *cli.Context) {
 }
 
 func serversDestroy(ctx *cli.Context) {
+
+	validatServersRequiredArgs()
+
 	if ctx.Int("id") == 0 && len(ctx.Args()) != 1 {
 		log.Fatal("Error: Must provide ID or name for server to destroy.")
 	}
 
+	rackspaceServiceClient := newServiceClient(RackspaceUsername, RackspaceAPIKey, RackspaceRegionName)
+
 	id := ctx.String("id")
 	if id == "" {
-		server, err := FindServerByName(RackspaceServiceClient, ctx.Args()[0])
+		server, err := FindServerByName(rackspaceServiceClient, ctx.Args()[0])
 		if err != nil {
 			log.Fatal(err)
 		} else {
@@ -228,12 +234,12 @@ func serversDestroy(ctx *cli.Context) {
 		}
 	}
 
-	server, err := servers.Get(RackspaceServiceClient, id).Extract()
+	server, err := servers.Get(rackspaceServiceClient, id).Extract()
 	if err != nil {
 		log.Fatalf("Unable to find server: %s.", err)
 	}
 
-	result := servers.Delete(RackspaceServiceClient, server.ID)
+	result := servers.Delete(rackspaceServiceClient, server.ID)
 
 	if result.ErrResult.Result.Err != nil {
 		log.Fatalf("Unable to delete server: %s.", result.ErrResult.Result.Err)
