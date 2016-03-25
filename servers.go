@@ -19,6 +19,7 @@ import (
 var RackspaceUsername string
 var RackspaceAPIKey string
 var RackspaceRegionName string
+
 var RackspaceServiceClient *gophercloud.ServiceClient
 
 var ServersCommand = cli.Command{

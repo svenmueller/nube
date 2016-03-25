@@ -61,6 +61,7 @@ func buildApp() *cli.App {
 	}
 	app.Commands = []cli.Command{
 		ServersCommand,
+		DNSCommand,
 	}
 
 	return app
