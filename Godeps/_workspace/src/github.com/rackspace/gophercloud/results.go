@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"reflect"
 
-	"github.com/mitchellh/mapstructure"
+	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/mitchellh/mapstructure"
 )
 
 /*

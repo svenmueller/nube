@@ -4,7 +4,7 @@
 package isatty
 
 import (
-	"golang.org/x/sys/unix"
+	"github.com/svenmueller/nube/Godeps/_workspace/src/golang.org/x/sys/unix"
 )
 
 // IsTerminal returns true if the given file descriptor is a terminal.

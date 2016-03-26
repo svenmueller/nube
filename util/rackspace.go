@@ -3,11 +3,11 @@ package util
 import (
 	"fmt"
 
-	"github.com/rackspace/gophercloud"
-	"github.com/rackspace/gophercloud/openstack/compute/v2/servers"
-	"github.com/rackspace/gophercloud/pagination"
-	"github.com/rackspace/gophercloud/rackspace"
-	"github.com/spf13/viper"
+	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud"
+	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/openstack/compute/v2/servers"
+	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/pagination"
+	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/rackspace"
+	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/viper"
 )
 
 func newRackspaceProviderClient() (*gophercloud.ProviderClient, error) {

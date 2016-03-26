@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/mattn/go-colorable"
-	"github.com/mattn/go-isatty"
+	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/mattn/go-colorable"
+	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/mattn/go-isatty"
 )
 
 // NoColor defines if the output is colorized or not. It's dynamically set to

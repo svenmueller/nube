@@ -14,7 +14,7 @@
 
 package cmd
 
-import "github.com/spf13/cobra"
+import "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra"
 
 var dns_zonesCmd = &cobra.Command{
 	Use:   "zones",
