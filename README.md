@@ -22,24 +22,20 @@ $ go get
 ## Usage
 
 ```
-NAME:
-   nube - commercetools command line interface for managing Rackspace/AWS resources.
+Manage Rackspace and AWS resources
 
-USAGE:
-   nube [global options] command [command options] [arguments...]
+Usage:
+  nube [command]
 
-VERSION:
-   0.0.1
+Available Commands:
+  dns         Manage AWS Route53 DNS resources
+  servers     Manage Rackspace Cloud Server resources
 
-COMMANDS:
-   servers, s	Server commands.
-   dns, d	DNS commands.
-   help, h	Shows a list of commands or help for one command
+Flags:
+      --config string   config file (default is $HOME/.nube.yaml)
+  -h, --help            help for nube
+  -o, --output string   output formt [yaml|json] (default "yaml")
+  -t, --toggle          Help message for toggle
 
-GLOBAL OPTIONS:
-   --api-key, -k 	Rackspace API key. [$RACKSPACE_API_KEY]
-   --format, -f "yaml"	Format for output.
-   --debug, -d		Turn on debug output.
-   --help, -h		show help
-   --version, -v	print the version
+Use "nube [command] --help" for more information about a command.
 ```
