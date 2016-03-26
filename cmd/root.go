@@ -51,7 +51,7 @@ func init() {
 	// will be global for your application.
 
 	RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.nube.yaml)")
-	RootCmd.PersistentFlags().StringP("output", "o", "yaml", "output formt [yaml|json]")
+	RootCmd.PersistentFlags().StringP("output", "o", "yaml", "output format [yaml|json]")
 	viper.BindPFlag("output", RootCmd.PersistentFlags().Lookup("output"))
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
