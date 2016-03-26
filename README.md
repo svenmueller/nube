@@ -48,10 +48,20 @@ $ nube servers instance list
 
 ```bash
 # Create 3 new server instances (using defaults for flavor/size etc.)
-$ nube instance create server1 server2 server3
+$ nube servers instance create server1 server2 server3
 ```
 
 ```bash
 # Destroy 3 server instances using ID or name
-$ nube instance destroy cdf0bb56 server2.example.com server3.example.com
+$ nube servers instance destroy cdf0bb56 server2.example.com server3.example.com
+```
+
+```bash
+# List all hosted zones
+$ nube dns zones list
+```
+
+```bash
+# List all resource records of for given hosted zone ID
+$ nube dns records list /hostedzone/Z1J4MHM0F4BHBX
 ```
