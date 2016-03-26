@@ -34,8 +34,24 @@ Available Commands:
 Flags:
       --config string   config file (default is $HOME/.nube.yaml)
   -h, --help            help for nube
-  -o, --output string   output formt [yaml|json] (default "yaml")
+  -o, --output string   output format [yaml|json] (default "yaml")
   -t, --toggle          Help message for toggle
 
 Use "nube [command] --help" for more information about a command.
+```
+
+### Examples
+```bash
+# List all server instances
+$ nube servers instance list
+```
+
+```bash
+# Create 3 new server instances (using defaults for flavor/size etc.)
+$ nube instance create server1 server2 server3
+```
+
+```bash
+# Destroy 3 server instances using ID or name
+$ nube instance destroy cdf0bb56 server2.example.com server3.example.com
 ```
