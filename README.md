@@ -43,22 +43,30 @@ Use "nube [command] --help" for more information about a command.
 ### Examples
 ```bash
 # List all server instances
-$ nube servers instance list
+nube servers instance list
 ```
 
 ```bash
-# Create 3 new server instances (using defaults for flavor/size etc.)
-$ nube servers instance create server1 server2 server3
+# Create 3 server instances (using defaults for flavor/size etc.)
+nube servers instance create server1 server2 server3
+```
+
+```bash
+# Create 1 server instance using custom flavor/image and user-data file
+nube servers instance create server1 \
+--flavor "2 GB Performance" \
+--image "Ubuntu 14.04 LTS (Trusty Tahr) (PVHVM)" \
+--user-data-file cloud-config.yaml
 ```
 
 ```bash
 # Destroy 3 server instances using ID or name
-$ nube servers instance destroy cdf0bb56 server2.example.com server3.example.com
+nube servers instance destroy cdf0bb56 server2.example.com server3.example.com
 ```
 
 ```bash
 # List all hosted zones
-$ nube dns zones list
+nube dns zones list
 ```
 
 ```bash
