@@ -1,8 +1,8 @@
 package tenants
 
 import (
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud"
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/pagination"
+	"github.com/rackspace/gophercloud"
+	"github.com/rackspace/gophercloud/pagination"
 )
 
 // ListOpts filters the Tenants that are returned by the List call.

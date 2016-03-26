@@ -3,7 +3,7 @@ package tokens
 import (
 	"fmt"
 
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud"
+	"github.com/rackspace/gophercloud"
 )
 
 // AuthOptionsBuilder describes any argument that may be passed to the Create call.

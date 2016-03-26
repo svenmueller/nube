@@ -3,7 +3,7 @@ package tokens
 import (
 	"net/http"
 
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud"
+	"github.com/rackspace/gophercloud"
 )
 
 // Scope allows a created token to be limited to a specific domain or project.

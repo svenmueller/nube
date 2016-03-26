@@ -115,13 +115,13 @@
 		},
 		{
 			"ImportPath": "github.com/docker/docker/pkg/namesgenerator",
-			"Comment": "v1.4.1-10982-g722f06d",
-			"Rev": "722f06dae3fe18865978d0f7f531ceea15b4f51a"
+			"Comment": "v1.4.1-11016-gc22d09f",
+			"Rev": "c22d09f56336b31a0569c424957b13f7baf01a92"
 		},
 		{
 			"ImportPath": "github.com/docker/docker/pkg/random",
-			"Comment": "v1.4.1-10982-g722f06d",
-			"Rev": "722f06dae3fe18865978d0f7f531ceea15b4f51a"
+			"Comment": "v1.4.1-11016-gc22d09f",
+			"Rev": "c22d09f56336b31a0569c424957b13f7baf01a92"
 		},
 		{
 			"ImportPath": "github.com/fatih/color",

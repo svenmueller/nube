@@ -3,9 +3,9 @@ package hcl
 import (
 	"fmt"
 
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/hashicorp/hcl/hcl/ast"
-	hclParser "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/hashicorp/hcl/hcl/parser"
-	jsonParser "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/hashicorp/hcl/json/parser"
+	"github.com/hashicorp/hcl/hcl/ast"
+	hclParser "github.com/hashicorp/hcl/hcl/parser"
+	jsonParser "github.com/hashicorp/hcl/json/parser"
 )
 
 // ParseBytes accepts as input byte slice and returns ast tree.
