@@ -1,13 +1,14 @@
-package main
+package util
 
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/svenmueller/nube/Godeps/_workspace/src/gopkg.in/yaml.v1"
 	"log"
 	"os"
 	"strings"
 	"text/tabwriter"
+
+	"github.com/svenmueller/nube/Godeps/_workspace/src/gopkg.in/yaml.v1"
 )
 
 type CLIOutput struct {
@@ -20,11 +21,11 @@ func NewCLIOutput() *CLIOutput {
 	}
 }
 
-func WriteOutput(data interface{}) {
+func WriteOutput(data interface{}, outputFormat string) {
 	var output []byte
 	var err error
 
-	switch OutputFormat {
+	switch outputFormat {
 	case "json":
 		output, err = json.Marshal(data)
 		if err != nil {

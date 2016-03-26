@@ -12,10 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package cmd
 
-import "github.com/svenmueller/nube/cmd"
+import "github.com/spf13/cobra"
 
-func main() {
-	cmd.Execute()
+var dns_recordsCmd = &cobra.Command{
+	Use:   "records",
+	Short: "Manage resource record sets",
+}
+
+func init() {
+	dnsCmd.AddCommand(dns_recordsCmd)
 }

@@ -12,10 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package cmd
 
-import "github.com/svenmueller/nube/cmd"
+import "github.com/spf13/cobra"
 
-func main() {
-	cmd.Execute()
+var servers_instanceCmd = &cobra.Command{
+	Use:   "instance",
+	Short: "Manage cloud server instances",
+}
+
+func init() {
+	serversCmd.AddCommand(servers_instanceCmd)
 }

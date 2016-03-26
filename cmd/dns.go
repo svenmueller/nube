@@ -12,10 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package cmd
 
-import "github.com/svenmueller/nube/cmd"
+import (
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
+)
 
-func main() {
-	cmd.Execute()
+var dnsCmd = &cobra.Command{
+	Use:   "dns",
+	Short: "Manage AWS Route53 DNS resources",
+}
+
+func init() {
+
+	RootCmd.AddCommand(dnsCmd)
+
+	dnsCmd.PersistentFlags().StringP("aws-access-key-id", "", "", "AWS Access Key ID")
+	dnsCmd.PersistentFlags().StringP("aws-secret-access-key", "", "", "AWS Secret Access Key")
+
+	viper.BindPFlag("aws-access-key-id", dnsCmd.PersistentFlags().Lookup("aws-access-key-id"))
+	viper.BindPFlag("aws-secret-access-key", dnsCmd.PersistentFlags().Lookup("aws-secret-access-key"))
+
 }
