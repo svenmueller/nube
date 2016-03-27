@@ -93,7 +93,7 @@ There are multiple ways to set values for `nube` CLI. All values are looked up i
 - Environment variable (upper case, prefix `NUBE_`, `-` replaced by `_`, e.g. `NUBE_RACKSPACE_USERNAME`)
 - Flags (e.g. `--rackspace-username`)
 
-Example for a configuration file (`~/.nube.yaml`)
+Example configuration file (`~/.nube.yaml`)
 ```yaml
 rackspace-username: bart.simpson
 rackspace-api-key: 12121212121
