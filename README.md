@@ -84,3 +84,27 @@ nube dns zones list
 # List all resource records of for given hosted zone ID
 $ nube dns records list /hostedzone/Z1J4MHM0F4BHBX
 ```
+
+## Configuration
+
+There are multiple ways to set values for `nube` CLI. All values are looked up in the following order:
+
+- Configuration file (default path is `~/.nube.yaml`)
+- Environment variable (upper case, prefix `NUBE_`, `-` replaced by `_`, e.g. `NUBE_RACKSPACE_USERNAME`)
+- Flags (e.g. `--rackspace-username`)
+
+Example for a configuration file (`~/.nube.yaml`)
+```yaml
+rackspace-username: bart.simpson
+rackspace-api-key: 12121212121
+rackspace-region: LON
+
+aws-access-key-id: 113131313131313
+aws-secret-access-key: 00000000000
+```
+
+You can have multiple configurations files (e.g. for production, staging etc.). In order to use a different configuration simply set the `config` flag.
+
+```bash
+nube --config ~/.nube_production.yaml
+```
