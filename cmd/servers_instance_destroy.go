@@ -56,7 +56,7 @@ func serversInstanceDestroy(cmd *cobra.Command, args []string) error {
 			list, err = util.ListAllServers(rackspaceServiceClient)
 
 			if err != nil {
-				return fmt.Errorf("Unable to destroy server instance: %v", err)
+				return fmt.Errorf("Unable to build server list: %v", err)
 			}
 
 			listInitialized = true

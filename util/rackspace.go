@@ -1,8 +1,6 @@
 package util
 
 import (
-	"fmt"
-
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud"
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/openstack/compute/v2/servers"
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/pagination"
@@ -55,7 +53,7 @@ func ListAllServers(serviceClient *gophercloud.ServiceClient) ([]servers.Server,
 	})
 
 	if err != nil {
-		return nil, fmt.Errorf("Unable to build list of servers: %v", err)
+		return nil, err
 	}
 
 	return list, err
