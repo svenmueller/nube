@@ -19,6 +19,17 @@ $ git clone
 $ go get
 ```
 
+Or using Docker:
+
+```bash
+docker run -v ~/.nube.yaml:/root/.nube.yaml svenmueller/nube
+```
+
+Set an alias for repeated calls
+```
+alias nube='docker run -v ~/.nube.yaml:/root/.nube.yaml svenmueller/nube'
+```
+
 ## Usage
 
 ```
