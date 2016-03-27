@@ -17,7 +17,6 @@ package cmd
 import (
 	"fmt"
 	"io/ioutil"
-	"os"
 	"strings"
 	"sync"
 
@@ -74,16 +73,11 @@ func serversInstanceCreate(cmd *cobra.Command, args []string) error {
 	}
 
 	userData := ""
-	userDataPath := viper.GetString("user-data-file")
-	if userDataPath != "" {
-		file, errOpen := os.Open(userDataPath)
-		if errOpen != nil {
-			return fmt.Errorf("Error opening user data file %q: %v.", userDataPath, errOpen)
-		}
-
-		userDataFile, errRead := ioutil.ReadAll(file)
-		if errRead != nil {
-			return fmt.Errorf("Error reading user data file %q: %v.", userDataPath, errRead)
+	filename := viper.GetString("user-data-file")
+	if filename != "" {
+		userDataFile, err := ioutil.ReadFile(filename)
+		if err != nil {
+			return fmt.Errorf("Error reading user data file %q: %v.", filename, err)
 		}
 		userData = string(userDataFile)
 	} else {
@@ -108,11 +102,17 @@ func serversInstanceCreate(cmd *cobra.Command, args []string) error {
 
 		name = strings.ToLower(name)
 
+		configDrive := false
+		if userData != "" {
+			configDrive = true
+		}
+
 		opts := &servers.CreateOpts{
-			Name:       name,
-			ImageName:  viper.GetString("image"),
-			FlavorName: viper.GetString("flavor"),
-			UserData:   []byte(userData),
+			Name:        name,
+			ImageName:   viper.GetString("image"),
+			FlavorName:  viper.GetString("flavor"),
+			UserData:    []byte(userData),
+			ConfigDrive: configDrive,
 		}
 
 		waitGroup.Add(1)
