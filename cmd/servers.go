@@ -14,10 +14,7 @@
 
 package cmd
 
-import (
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra"
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/viper"
-)
+import "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra"
 
 var serversCmd = &cobra.Command{
 	Use:   "servers",
@@ -26,13 +23,4 @@ var serversCmd = &cobra.Command{
 
 func init() {
 	RootCmd.AddCommand(serversCmd)
-
-	serversCmd.PersistentFlags().StringP("rackspace-username", "", "", "Rackspace API username")
-	serversCmd.PersistentFlags().StringP("rackspace-api-key", "", "", "Rackspace API key")
-	serversCmd.PersistentFlags().StringP("rackspace-region", "", "LON", "Rackspace region name")
-
-	viper.BindPFlag("rackspace-username", serversCmd.PersistentFlags().Lookup("rackspace-username"))
-	viper.BindPFlag("rackspace-api-key", serversCmd.PersistentFlags().Lookup("rackspace-api-key"))
-	viper.BindPFlag("rackspace-region", serversCmd.PersistentFlags().Lookup("rackspace-region"))
-
 }

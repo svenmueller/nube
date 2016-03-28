@@ -20,6 +20,8 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/aws/aws-sdk-go/aws"
+	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/aws/aws-sdk-go/service/route53"
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/docker/docker/pkg/namesgenerator"
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/openstack/compute/v2/servers"
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra"
@@ -35,6 +37,17 @@ var servers_instance_createCmd = &cobra.Command{
 		err := serversInstanceCreate(cmd, args)
 		common.HandleError(err, cmd)
 	},
+	PreRun: func(cmd *cobra.Command, args []string) {
+		viper.BindPFlag("hosted-zone-id", cmd.Flags().Lookup("hosted-zone-id"))
+		viper.BindPFlag("domain", cmd.Flags().Lookup("domain"))
+		viper.BindPFlag("add-random-name", cmd.Flags().Lookup("add-random-name"))
+		viper.BindPFlag("add-region", cmd.Flags().Lookup("add-region"))
+		viper.BindPFlag("user-data", cmd.Flags().Lookup("user-data"))
+		viper.BindPFlag("user-data-file", cmd.Flags().Lookup("user-data-file"))
+		viper.BindPFlag("flavor", cmd.Flags().Lookup("flavor"))
+		viper.BindPFlag("image", cmd.Flags().Lookup("image"))
+		viper.BindPFlag("wait-for-active", cmd.Flags().Lookup("wait-for-active"))
+	},
 }
 
 func init() {
@@ -48,15 +61,7 @@ func init() {
 	servers_instance_createCmd.Flags().StringP("flavor", "f", "1 GB Performance", "Flavor of server")
 	servers_instance_createCmd.Flags().StringP("image", "i", "Ubuntu 14.04 LTS (Trusty Tahr) (PVHVM)", "Image name of server")
 	servers_instance_createCmd.Flags().BoolP("wait-for-active", "w", true, "Don't return until the create has succeeded or failed")
-
-	viper.BindPFlag("domain", servers_instance_createCmd.Flags().Lookup("domain"))
-	viper.BindPFlag("add-random-name", servers_instance_createCmd.Flags().Lookup("add-random-name"))
-	viper.BindPFlag("add-region", servers_instance_createCmd.Flags().Lookup("add-region"))
-	viper.BindPFlag("user-data", servers_instance_createCmd.Flags().Lookup("user-data"))
-	viper.BindPFlag("user-data-file", servers_instance_createCmd.Flags().Lookup("user-data-file"))
-	viper.BindPFlag("flavor", servers_instance_createCmd.Flags().Lookup("flavor"))
-	viper.BindPFlag("image", servers_instance_createCmd.Flags().Lookup("image"))
-	viper.BindPFlag("wait-for-active", servers_instance_createCmd.Flags().Lookup("wait-for-active"))
+	servers_instance_createCmd.Flags().StringP("hosted-zone-id", "z", "", "Add DNS resource record (type A, public IPv4 address) to hosted zone.")
 
 }
 
@@ -71,6 +76,8 @@ func serversInstanceCreate(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return fmt.Errorf("Unable to establish connection: %v", err)
 	}
+
+	awsServiceClient := util.NewRoute53Service()
 
 	userData := ""
 	filename := viper.GetString("user-data-file")
@@ -121,15 +128,16 @@ func serversInstanceCreate(cmd *cobra.Command, args []string) error {
 			defer waitGroup.Done()
 
 			server, err := servers.Create(rackspaceServiceClient, opts).Extract()
-			fmt.Printf("Creating server %q\n", opts.Name)
 
 			if err != nil {
 				errs <- err
 				return
 			}
 
-			if viper.GetBool("wait-for-active") {
-				fmt.Printf("Waiting for state %q of server %q\n", "ACTIVE", opts.Name)
+			fmt.Printf("Creating server %q\n", opts.Name)
+
+			if viper.GetBool("wait-for-active") || viper.GetString("hosted-zone-id") != "" {
+				fmt.Printf("Waiting for server %q\n", opts.Name)
 				err = servers.WaitForStatus(rackspaceServiceClient, server.ID, "ACTIVE", 600)
 
 				if err != nil {
@@ -145,7 +153,42 @@ func serversInstanceCreate(cmd *cobra.Command, args []string) error {
 				}
 			}
 
+			fmt.Printf("Created server %q\n\n", server.Name)
 			util.WriteOutput(server, viper.GetString("output"))
+
+			if viper.GetString("hosted-zone-id") != "" {
+
+				params := &route53.ChangeResourceRecordSetsInput{
+					HostedZoneId: aws.String(viper.GetString("hosted-zone-id")),
+					ChangeBatch: &route53.ChangeBatch{
+						Changes: []*route53.Change{
+							{
+								Action: aws.String("CREATE"),
+								ResourceRecordSet: &route53.ResourceRecordSet{
+									Name: aws.String(fmt.Sprintf("%s.", server.Name)),
+									Type: aws.String("A"),
+									TTL:  aws.Int64(3600),
+									ResourceRecords: []*route53.ResourceRecord{
+										{
+											Value: aws.String(server.AccessIPv4),
+										},
+									},
+								},
+							},
+						},
+					},
+				}
+
+				fmt.Printf("Creating DNS resource record set %q\n", server.Name)
+				_, err := awsServiceClient.ChangeResourceRecordSets(params)
+
+				if err != nil {
+					errs <- err
+					return
+				}
+
+				fmt.Printf("Created DNS resource record set %q (Type: %s, TTL: %d, Value: %s)\n", server.Name, "A", 3600, server.AccessIPv4)
+			}
 		}()
 	}
 

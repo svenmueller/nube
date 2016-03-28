@@ -17,8 +17,11 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/aws/aws-sdk-go/aws"
+	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/aws/aws-sdk-go/service/route53"
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/openstack/compute/v2/servers"
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra"
+	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/viper"
 	"github.com/svenmueller/nube/common"
 	"github.com/svenmueller/nube/util"
 )
@@ -30,10 +33,14 @@ var servers_instance_destroyCmd = &cobra.Command{
 		err := serversInstanceDestroy(cmd, args)
 		common.HandleError(err, cmd)
 	},
+	PreRun: func(cmd *cobra.Command, args []string) {
+		viper.BindPFlag("hosted-zone-id", cmd.Flags().Lookup("hosted-zone-id"))
+	},
 }
 
 func init() {
 	servers_instanceCmd.AddCommand(servers_instance_destroyCmd)
+	servers_instance_destroyCmd.Flags().StringP("hosted-zone-id", "a", "", "Delete DNS resource record with same name in hosted zone.")
 }
 
 func serversInstanceDestroy(cmd *cobra.Command, args []string) error {
@@ -47,6 +54,8 @@ func serversInstanceDestroy(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return fmt.Errorf("Unable to establish connection: %v", err)
 	}
+
+	awsServiceClient := util.NewRoute53Service()
 
 	var list []servers.Server
 	listInitialized := false
@@ -78,7 +87,39 @@ func serversInstanceDestroy(cmd *cobra.Command, args []string) error {
 		if result.ErrResult.Result.Err != nil {
 			return fmt.Errorf("Unable to delete server %q: %v", matchedServer.ID, result.ErrResult.Result.Err)
 		}
+
 		fmt.Printf("Destroyed server %q (ID: %q)\n", matchedServer.Name, matchedServer.ID)
+
+		if viper.GetString("hosted-zone-id") != "" {
+			params := &route53.ChangeResourceRecordSetsInput{
+				HostedZoneId: aws.String(viper.GetString("hosted-zone-id")),
+				ChangeBatch: &route53.ChangeBatch{
+					Changes: []*route53.Change{
+						{
+							Action: aws.String("DELETE"),
+							ResourceRecordSet: &route53.ResourceRecordSet{
+								Name: aws.String(fmt.Sprintf("%s.", matchedServer.Name)),
+								Type: aws.String("A"),
+								TTL:  aws.Int64(3600),
+								ResourceRecords: []*route53.ResourceRecord{
+									{
+										Value: aws.String(matchedServer.AccessIPv4),
+									},
+								},
+							},
+						},
+					},
+				},
+			}
+
+			resp, err := awsServiceClient.ChangeResourceRecordSets(params)
+
+			if err != nil {
+				return fmt.Errorf("Unable to delete resource record set %s: %v", fmt.Sprintf("%s.", matchedServer.Name), err.Error())
+			}
+
+			util.WriteOutput(resp, viper.GetString("output"))
+		}
 	}
 
 	return nil

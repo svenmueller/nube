@@ -14,10 +14,7 @@
 
 package cmd
 
-import (
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra"
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/viper"
-)
+import "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra"
 
 var dnsCmd = &cobra.Command{
 	Use:   "dns",
@@ -27,11 +24,5 @@ var dnsCmd = &cobra.Command{
 func init() {
 
 	RootCmd.AddCommand(dnsCmd)
-
-	dnsCmd.PersistentFlags().StringP("aws-access-key-id", "", "", "AWS Access Key ID")
-	dnsCmd.PersistentFlags().StringP("aws-secret-access-key", "", "", "AWS Secret Access Key")
-
-	viper.BindPFlag("aws-access-key-id", dnsCmd.PersistentFlags().Lookup("aws-access-key-id"))
-	viper.BindPFlag("aws-secret-access-key", dnsCmd.PersistentFlags().Lookup("aws-secret-access-key"))
 
 }

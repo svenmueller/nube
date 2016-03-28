@@ -53,8 +53,21 @@ func init() {
 	RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.nube.yaml)")
 	RootCmd.PersistentFlags().StringP("output", "o", "yaml", "output format [yaml|json]")
 	viper.BindPFlag("output", RootCmd.PersistentFlags().Lookup("output"))
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
+
+	// rackspace
+	RootCmd.PersistentFlags().StringP("rackspace-username", "", "", "Rackspace API username")
+	RootCmd.PersistentFlags().StringP("rackspace-api-key", "", "", "Rackspace API key")
+	RootCmd.PersistentFlags().StringP("rackspace-region", "", "LON", "Rackspace region name")
+	viper.BindPFlag("rackspace-username", RootCmd.PersistentFlags().Lookup("rackspace-username"))
+	viper.BindPFlag("rackspace-api-key", RootCmd.PersistentFlags().Lookup("rackspace-api-key"))
+	viper.BindPFlag("rackspace-region", RootCmd.PersistentFlags().Lookup("rackspace-region"))
+
+	// aws
+	RootCmd.PersistentFlags().StringP("aws-access-key-id", "", "", "AWS Access Key ID")
+	RootCmd.PersistentFlags().StringP("aws-secret-access-key", "", "", "AWS Secret Access Key")
+	viper.BindPFlag("aws-access-key-id", RootCmd.PersistentFlags().Lookup("aws-access-key-id"))
+	viper.BindPFlag("aws-secret-access-key", RootCmd.PersistentFlags().Lookup("aws-secret-access-key"))
+
 	RootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
