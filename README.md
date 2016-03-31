@@ -30,6 +30,12 @@ Set an alias for repeated calls
 alias nube='docker run -v ~/.nube.yaml:/root/.nube.yaml svenmueller/nube'
 ```
 
+Hint: You can define different aliases for different use cases/environments.
+```
+alias staging-us='docker run -v ~/.nube/staging-us.yaml:/root/.nube.yaml svenmueller/nube'
+alias staging-eu='docker run -v ~/.nube/staging-eu.yaml:/root/.nube.yaml svenmueller/nube'
+```
+
 ## Usage
 
 ```
