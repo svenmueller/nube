@@ -112,7 +112,7 @@ func serversInstanceDestroy(cmd *cobra.Command, args []string) error {
 				},
 			}
 
-			resp, err := awsServiceClient.ChangeResourceRecordSets(params)
+			_, err := awsServiceClient.ChangeResourceRecordSets(params)
 
 			if err != nil {
 				return fmt.Errorf("Unable to delete resource record set %s: %v", fmt.Sprintf("%s.", matchedServer.Name), err.Error())
