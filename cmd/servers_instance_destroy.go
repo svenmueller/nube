@@ -118,6 +118,7 @@ func serversInstanceDestroy(cmd *cobra.Command, args []string) error {
 				return fmt.Errorf("Unable to delete resource record set %s: %v", fmt.Sprintf("%s.", matchedServer.Name), err.Error())
 			}
 
+			fmt.Printf("Deleted resource record set %q from hosted zone %q \n", fmt.Sprintf("%s.", matchedServer.Name), viper.GetString("hosted-zone-id"))
 			util.WriteOutput(resp, viper.GetString("output"))
 		}
 	}
