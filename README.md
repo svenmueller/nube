@@ -88,7 +88,7 @@ nube dns zones list
 
 ```bash
 # List all resource records of for given hosted zone ID
-$ nube dns records list /hostedzone/Z1J4MHM0F4BHBX
+$ nube dns records list /hostedzone/XXXXXX
 ```
 
 ## Configuration
@@ -107,6 +107,10 @@ rackspace-region: LON
 
 aws-access-key-id: 113131313131313
 aws-secret-access-key: 00000000000
+
+# Example:
+# in case you don't want to pass a hosted zone ID for creating a new DNS resource record set
+# hosted-zone-id: /hostedzone/XXXXXXX
 ```
 
 You can have multiple configurations files (e.g. for production, staging etc.). In order to use a different configuration simply set the `config` flag.
