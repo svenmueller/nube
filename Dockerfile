@@ -6,5 +6,4 @@ ADD . /go/src/github.com/svenmueller/nube
 RUN go install && \
 rm -rf /go/pkg && rm -rf /go/src && rm -rf /var/cache/apk/*
 
-VOLUME ["/root/.nube.yaml"]
 ENTRYPOINT ["nube"]
