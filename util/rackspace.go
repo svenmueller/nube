@@ -5,13 +5,12 @@ import (
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/openstack/compute/v2/servers"
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/pagination"
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/rackspace"
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/viper"
 )
 
-func newRackspaceProviderClient() (*gophercloud.ProviderClient, error) {
+func newRackspaceProviderClient(username string, apiKey string) (*gophercloud.ProviderClient, error) {
 	authOpts := gophercloud.AuthOptions{
-		Username: viper.GetString("rackspace-username"),
-		APIKey:   viper.GetString("rackspace-api-key"),
+		Username: username,
+		APIKey:   apiKey,
 	}
 
 	provider, err := rackspace.AuthenticatedClient(authOpts)
@@ -19,16 +18,16 @@ func newRackspaceProviderClient() (*gophercloud.ProviderClient, error) {
 	return provider, err
 }
 
-func NewRackspaceService() (*gophercloud.ServiceClient, error) {
+func NewRackspaceService(username string, apiKey string, region string) (*gophercloud.ServiceClient, error) {
 
-	provider, err := newRackspaceProviderClient()
+	provider, err := newRackspaceProviderClient(username, apiKey)
 
 	if err != nil {
 		return nil, err
 	}
 
 	client, err := rackspace.NewComputeV2(provider, gophercloud.EndpointOpts{
-		Region: viper.GetString("rackspace-region"),
+		Region: region,
 	})
 
 	return client, err

@@ -19,11 +19,15 @@ import (
 	"os"
 	"strings"
 
+	"github.com/svenmueller/nube/common"
+
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra"
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/viper"
 )
 
 var cfgFile string
+var profile string
+var Cfg *viper.Viper
 
 // This represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
@@ -50,23 +54,19 @@ func init() {
 	// Cobra supports Persistent Flags, which, if defined here,
 	// will be global for your application.
 
-	RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.nube.yaml)")
-	RootCmd.PersistentFlags().StringP("output", "o", "yaml", "output format [yaml|json]")
-	viper.BindPFlag("output", RootCmd.PersistentFlags().Lookup("output"))
+	RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "Configuration file (default is $HOME/.nube.yaml)")
+	RootCmd.PersistentFlags().StringVar(&profile, "profile", "default", "Profile name. ")
+
+	RootCmd.PersistentFlags().StringP("output", "o", "yaml", "Output format [yaml|json]")
 
 	// rackspace
 	RootCmd.PersistentFlags().StringP("rackspace-username", "", "", "Rackspace API username")
 	RootCmd.PersistentFlags().StringP("rackspace-api-key", "", "", "Rackspace API key")
 	RootCmd.PersistentFlags().StringP("rackspace-region", "", "LON", "Rackspace region name")
-	viper.BindPFlag("rackspace-username", RootCmd.PersistentFlags().Lookup("rackspace-username"))
-	viper.BindPFlag("rackspace-api-key", RootCmd.PersistentFlags().Lookup("rackspace-api-key"))
-	viper.BindPFlag("rackspace-region", RootCmd.PersistentFlags().Lookup("rackspace-region"))
 
 	// aws
 	RootCmd.PersistentFlags().StringP("aws-access-key-id", "", "", "AWS Access Key ID")
 	RootCmd.PersistentFlags().StringP("aws-secret-access-key", "", "", "AWS Secret Access Key")
-	viper.BindPFlag("aws-access-key-id", RootCmd.PersistentFlags().Lookup("aws-access-key-id"))
-	viper.BindPFlag("aws-secret-access-key", RootCmd.PersistentFlags().Lookup("aws-secret-access-key"))
 
 	RootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
@@ -88,4 +88,19 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
 	}
+
+	if viper.IsSet(profile) {
+		Cfg = viper.Sub(profile)
+	} else {
+		common.HandleError(fmt.Errorf("Profile %q not found in configuration file %q\n", profile, cfgFile), RootCmd)
+		os.Exit(1)
+	}
+
+	Cfg.BindPFlag("output", RootCmd.PersistentFlags().Lookup("output"))
+	Cfg.BindPFlag("rackspace-username", RootCmd.PersistentFlags().Lookup("rackspace-username"))
+	Cfg.BindPFlag("rackspace-api-key", RootCmd.PersistentFlags().Lookup("rackspace-api-key"))
+	Cfg.BindPFlag("rackspace-region", RootCmd.PersistentFlags().Lookup("rackspace-region"))
+	Cfg.BindPFlag("aws-access-key-id", RootCmd.PersistentFlags().Lookup("aws-access-key-id"))
+	Cfg.BindPFlag("aws-secret-access-key", RootCmd.PersistentFlags().Lookup("aws-secret-access-key"))
+
 }

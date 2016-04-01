@@ -21,7 +21,6 @@ import (
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/aws/aws-sdk-go/service/route53"
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/openstack/compute/v2/servers"
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra"
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/viper"
 	"github.com/svenmueller/nube/common"
 	"github.com/svenmueller/nube/util"
 )
@@ -34,7 +33,7 @@ var servers_instance_destroyCmd = &cobra.Command{
 		common.HandleError(err, cmd)
 	},
 	PreRun: func(cmd *cobra.Command, args []string) {
-		viper.BindPFlag("hosted-zone-id", cmd.Flags().Lookup("hosted-zone-id"))
+		Cfg.BindPFlag("hosted-zone-id", cmd.Flags().Lookup("hosted-zone-id"))
 	},
 }
 
@@ -49,13 +48,13 @@ func serversInstanceDestroy(cmd *cobra.Command, args []string) error {
 		return common.NewMissingArgumentsError(cmd)
 	}
 
-	rackspaceServiceClient, err := util.NewRackspaceService()
+	rackspaceServiceClient, err := util.NewRackspaceService(Cfg.GetString("rackspace-username"), Cfg.GetString("rackspace-api-key"), Cfg.GetString("rackspace-region"))
 
 	if err != nil {
 		return fmt.Errorf("Unable to establish connection: %v", err)
 	}
 
-	awsServiceClient := util.NewRoute53Service()
+	awsServiceClient := util.NewRoute53Service(Cfg.GetString("aws-access-key-id"), Cfg.GetString("aws-secret-access-key"))
 
 	var list []servers.Server
 	listInitialized := false
@@ -90,9 +89,9 @@ func serversInstanceDestroy(cmd *cobra.Command, args []string) error {
 
 		fmt.Printf("Destroyed server %q (ID: %q)\n", matchedServer.Name, matchedServer.ID)
 
-		if viper.GetString("hosted-zone-id") != "" {
+		if Cfg.GetString("hosted-zone-id") != "" {
 			params := &route53.ChangeResourceRecordSetsInput{
-				HostedZoneId: aws.String(viper.GetString("hosted-zone-id")),
+				HostedZoneId: aws.String(Cfg.GetString("hosted-zone-id")),
 				ChangeBatch: &route53.ChangeBatch{
 					Changes: []*route53.Change{
 						{
@@ -118,7 +117,7 @@ func serversInstanceDestroy(cmd *cobra.Command, args []string) error {
 				return fmt.Errorf("Unable to delete resource record set %s: %v", fmt.Sprintf("%s.", matchedServer.Name), err.Error())
 			}
 
-			fmt.Printf("Deleted resource record set %q from hosted zone %q \n", fmt.Sprintf("%s.", matchedServer.Name), viper.GetString("hosted-zone-id"))
+			fmt.Printf("Deleted resource record set %q from hosted zone %q \n", fmt.Sprintf("%s.", matchedServer.Name), Cfg.GetString("hosted-zone-id"))
 		}
 	}
 

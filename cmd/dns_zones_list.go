@@ -38,7 +38,7 @@ func init() {
 
 func dnsHostedZonesList(cmd *cobra.Command, args []string) error {
 
-	serviceClient := util.NewRoute53Service()
+	serviceClient := util.NewRoute53Service(Cfg.GetString("aws-access-key-id"), Cfg.GetString("aws-secret-access-key"))
 	params := &route53.ListHostedZonesInput{}
 	resp, err := serviceClient.ListHostedZones(params)
 

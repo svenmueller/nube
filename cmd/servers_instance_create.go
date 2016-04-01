@@ -25,7 +25,6 @@ import (
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/docker/docker/pkg/namesgenerator"
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/openstack/compute/v2/servers"
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra"
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/viper"
 	"github.com/svenmueller/nube/common"
 	"github.com/svenmueller/nube/util"
 )
@@ -38,15 +37,15 @@ var servers_instance_createCmd = &cobra.Command{
 		common.HandleError(err, cmd)
 	},
 	PreRun: func(cmd *cobra.Command, args []string) {
-		viper.BindPFlag("hosted-zone-id", cmd.Flags().Lookup("hosted-zone-id"))
-		viper.BindPFlag("domain", cmd.Flags().Lookup("domain"))
-		viper.BindPFlag("add-random-name", cmd.Flags().Lookup("add-random-name"))
-		viper.BindPFlag("add-region", cmd.Flags().Lookup("add-region"))
-		viper.BindPFlag("user-data", cmd.Flags().Lookup("user-data"))
-		viper.BindPFlag("user-data-file", cmd.Flags().Lookup("user-data-file"))
-		viper.BindPFlag("flavor", cmd.Flags().Lookup("flavor"))
-		viper.BindPFlag("image", cmd.Flags().Lookup("image"))
-		viper.BindPFlag("wait-for-active", cmd.Flags().Lookup("wait-for-active"))
+		Cfg.BindPFlag("hosted-zone-id", cmd.Flags().Lookup("hosted-zone-id"))
+		Cfg.BindPFlag("domain", cmd.Flags().Lookup("domain"))
+		Cfg.BindPFlag("add-random-name", cmd.Flags().Lookup("add-random-name"))
+		Cfg.BindPFlag("add-region", cmd.Flags().Lookup("add-region"))
+		Cfg.BindPFlag("user-data", cmd.Flags().Lookup("user-data"))
+		Cfg.BindPFlag("user-data-file", cmd.Flags().Lookup("user-data-file"))
+		Cfg.BindPFlag("flavor", cmd.Flags().Lookup("flavor"))
+		Cfg.BindPFlag("image", cmd.Flags().Lookup("image"))
+		Cfg.BindPFlag("wait-for-active", cmd.Flags().Lookup("wait-for-active"))
 	},
 }
 
@@ -71,16 +70,16 @@ func serversInstanceCreate(cmd *cobra.Command, args []string) error {
 		return common.NewMissingArgumentsError(cmd)
 	}
 
-	rackspaceServiceClient, err := util.NewRackspaceService()
+	rackspaceServiceClient, err := util.NewRackspaceService(Cfg.GetString("rackspace-username"), Cfg.GetString("rackspace-api-key"), Cfg.GetString("rackspace-region"))
 
 	if err != nil {
 		return fmt.Errorf("Unable to establish connection: %v", err)
 	}
 
-	awsServiceClient := util.NewRoute53Service()
+	awsServiceClient := util.NewRoute53Service(Cfg.GetString("aws-access-key-id"), Cfg.GetString("aws-secret-access-key"))
 
 	userData := ""
-	filename := viper.GetString("user-data-file")
+	filename := Cfg.GetString("user-data-file")
 	if filename != "" {
 		userDataFile, err := ioutil.ReadFile(filename)
 		if err != nil {
@@ -88,7 +87,7 @@ func serversInstanceCreate(cmd *cobra.Command, args []string) error {
 		}
 		userData = string(userDataFile)
 	} else {
-		userData = viper.GetString("user-data")
+		userData = Cfg.GetString("user-data")
 	}
 
 	var waitGroup sync.WaitGroup
@@ -96,15 +95,15 @@ func serversInstanceCreate(cmd *cobra.Command, args []string) error {
 
 	for _, name := range args {
 		// Add domain to end if available.
-		if viper.GetBool("add-random-name") {
+		if Cfg.GetBool("add-random-name") {
 			randomServerName := strings.Replace(namesgenerator.GetRandomName(0), "_", "-", -1)
 			name = fmt.Sprintf("%s-%s", name, randomServerName)
 		}
-		if viper.GetBool("add-region") {
-			name = fmt.Sprintf("%s.%s", name, viper.GetString("rackspace-region"))
+		if Cfg.GetBool("add-region") {
+			name = fmt.Sprintf("%s.%s", name, Cfg.GetString("rackspace-region"))
 		}
-		if viper.GetString("domain") != "" {
-			name = fmt.Sprintf("%s.%s", name, viper.GetString("domain"))
+		if Cfg.GetString("domain") != "" {
+			name = fmt.Sprintf("%s.%s", name, Cfg.GetString("domain"))
 		}
 
 		name = strings.ToLower(name)
@@ -116,8 +115,8 @@ func serversInstanceCreate(cmd *cobra.Command, args []string) error {
 
 		opts := &servers.CreateOpts{
 			Name:        name,
-			ImageName:   viper.GetString("image"),
-			FlavorName:  viper.GetString("flavor"),
+			ImageName:   Cfg.GetString("image"),
+			FlavorName:  Cfg.GetString("flavor"),
 			UserData:    []byte(userData),
 			ConfigDrive: configDrive,
 		}
@@ -136,7 +135,7 @@ func serversInstanceCreate(cmd *cobra.Command, args []string) error {
 
 			fmt.Printf("Creating server %q\n", opts.Name)
 
-			if viper.GetBool("wait-for-active") || viper.GetString("hosted-zone-id") != "" {
+			if Cfg.GetBool("wait-for-active") || Cfg.GetString("hosted-zone-id") != "" {
 				fmt.Printf("Waiting for server %q\n", opts.Name)
 				err = servers.WaitForStatus(rackspaceServiceClient, server.ID, "ACTIVE", 600)
 
@@ -154,12 +153,12 @@ func serversInstanceCreate(cmd *cobra.Command, args []string) error {
 			}
 
 			fmt.Printf("Created server %q\n\n", server.Name)
-			util.WriteOutput(server, viper.GetString("output"))
+			util.WriteOutput(server, Cfg.GetString("output"))
 
-			if viper.GetString("hosted-zone-id") != "" {
+			if Cfg.GetString("hosted-zone-id") != "" {
 
 				params := &route53.ChangeResourceRecordSetsInput{
-					HostedZoneId: aws.String(viper.GetString("hosted-zone-id")),
+					HostedZoneId: aws.String(Cfg.GetString("hosted-zone-id")),
 					ChangeBatch: &route53.ChangeBatch{
 						Changes: []*route53.Change{
 							{

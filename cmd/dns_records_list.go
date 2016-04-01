@@ -44,7 +44,7 @@ func dnsResourceRecordSetsList(cmd *cobra.Command, args []string) error {
 
 	hostedZoneId := args[0]
 
-	serviceClient := util.NewRoute53Service()
+	serviceClient := util.NewRoute53Service(Cfg.GetString("aws-access-key-id"), Cfg.GetString("aws-secret-access-key"))
 
 	params := &route53.ListResourceRecordSetsInput{
 		HostedZoneId: &hostedZoneId,

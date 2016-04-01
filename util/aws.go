@@ -5,14 +5,13 @@ import (
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/aws/aws-sdk-go/aws/session"
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/aws/aws-sdk-go/service/route53"
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/viper"
 )
 
-func NewRoute53Service() *route53.Route53 {
+func NewRoute53Service(keyId string, accessKey string) *route53.Route53 {
 	provider := credentials.StaticProvider{
 		Value: credentials.Value{
-			AccessKeyID:     viper.GetString("aws-access-key-id"),
-			SecretAccessKey: viper.GetString("aws-secret-access-key"),
+			AccessKeyID:     keyId,
+			SecretAccessKey: accessKey,
 			SessionToken:    "",
 		},
 	}

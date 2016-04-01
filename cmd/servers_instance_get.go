@@ -19,7 +19,6 @@ import (
 
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/openstack/compute/v2/servers"
 	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra"
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/viper"
 	"github.com/svenmueller/nube/common"
 	"github.com/svenmueller/nube/util"
 )
@@ -43,7 +42,7 @@ func serversInstanceGet(cmd *cobra.Command, args []string) error {
 		return common.NewMissingArgumentsError(cmd)
 	}
 
-	rackspaceServiceClient, err := util.NewRackspaceService()
+	rackspaceServiceClient, err := util.NewRackspaceService(Cfg.GetString("rackspace-username"), Cfg.GetString("rackspace-api-key"), Cfg.GetString("rackspace-region"))
 
 	if err != nil {
 		return fmt.Errorf("Unable to establish connection: %v", err)
@@ -75,7 +74,7 @@ func serversInstanceGet(cmd *cobra.Command, args []string) error {
 			return fmt.Errorf("Unable to find server %q", idOrName)
 		}
 
-		util.WriteOutput(matchedServer, viper.GetString("output"))
+		util.WriteOutput(matchedServer, Cfg.GetString("output"))
 	}
 
 	return nil

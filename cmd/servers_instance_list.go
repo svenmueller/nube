@@ -43,7 +43,7 @@ func serversInstanceList(cmd *cobra.Command, args []string) error {
 	// collection, leave it as an empty struct
 	opts := servers.ListOpts{}
 
-	rackspaceServiceClient, err := util.NewRackspaceService()
+	rackspaceServiceClient, err := util.NewRackspaceService(Cfg.GetString("rackspace-username"), Cfg.GetString("rackspace-api-key"), Cfg.GetString("rackspace-region"))
 
 	if err != nil {
 		return fmt.Errorf("Unable to establish connection: %v", err)

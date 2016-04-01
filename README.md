@@ -30,12 +30,6 @@ Set an alias for repeated calls
 alias nube='docker run --rm -v ~/.nube.yaml:/root/.nube.yaml svenmueller/nube'
 ```
 
-Hint: You can define different aliases for different use cases/environments.
-```
-alias staging-us='docker run --rm -v ~/.nube/staging-us.yaml:/root/.nube.yaml svenmueller/nube'
-alias staging-eu='docker run --rm -v ~/.nube/staging-eu.yaml:/root/.nube.yaml svenmueller/nube'
-```
-
 ## Usage
 
 ```
@@ -101,20 +95,36 @@ There are multiple ways to set values for `nube` CLI. All values are looked up i
 
 Example configuration file (`~/.nube.yaml`)
 ```yaml
-rackspace-username: bart.simpson
-rackspace-api-key: 12121212121
-rackspace-region: LON
+default:
+  rackspace-username: bart.simpson
+  rackspace-api-key: 12121212121
+  rackspace-region: LON
 
-aws-access-key-id: 113131313131313
-aws-secret-access-key: 00000000000
+  aws-access-key-id: 113131313131313
+  aws-secret-access-key: 00000000000
 
-# Example:
-# in case you don't want to pass a hosted zone ID for creating a new DNS resource record set
-# hosted-zone-id: /hostedzone/XXXXXXX
+  # to avoid having to pass --hosted-zone-id option to create resource record set
+  # hosted-zone-id: /hostedzone/XXXXXXX
 ```
 
-You can have multiple configurations files (e.g. for production, staging etc.). In order to use a different configuration simply set the `config` flag.
+### Named Profiles
+
+The nube CLI supports named profiles stored in the config files. You can configure additional profiles by adding entries to the config files.
+
+The following example shows a config file with two profiles:
+```yaml
+default:
+  ...
+  ...
+production:
+  ...
+  ...
+```
+
+To use a named profile, add the `--profile` option to your command. The following example lists server instances using the `production` profile from example above.
 
 ```bash
-nube --config ~/.nube_production.yaml
+# List all hosted zones
+nube dns zones list
 ```
+By default, the named profile `default` is used if no `--profile` option is found.
