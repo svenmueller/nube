@@ -22,18 +22,18 @@ $ go get
 Or using Docker:
 
 ```bash
-docker run -v ~/.nube.yaml:/root/.nube.yaml svenmueller/nube
+docker run --rm -v ~/.nube.yaml:/root/.nube.yaml svenmueller/nube
 ```
 
 Set an alias for repeated calls
 ```
-alias nube='docker run -v ~/.nube.yaml:/root/.nube.yaml svenmueller/nube'
+alias nube='docker run --rm -v ~/.nube.yaml:/root/.nube.yaml svenmueller/nube'
 ```
 
 Hint: You can define different aliases for different use cases/environments.
 ```
-alias staging-us='docker run -v ~/.nube/staging-us.yaml:/root/.nube.yaml svenmueller/nube'
-alias staging-eu='docker run -v ~/.nube/staging-eu.yaml:/root/.nube.yaml svenmueller/nube'
+alias staging-us='docker run --rm -v ~/.nube/staging-us.yaml:/root/.nube.yaml svenmueller/nube'
+alias staging-eu='docker run --rm -v ~/.nube/staging-eu.yaml:/root/.nube.yaml svenmueller/nube'
 ```
 
 ## Usage
