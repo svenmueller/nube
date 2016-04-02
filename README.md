@@ -45,8 +45,8 @@ Usage:
   nube [command]
 
 Available Commands:
-  dns         Manage AWS Route53 DNS resources
-  servers     Manage Rackspace Cloud Server resources
+  dns         AWS Route53 DNS commands
+  servers     Rackspace Cloud Server commands
 
 Flags:
       --aws-access-key-id string       AWS Access Key ID
