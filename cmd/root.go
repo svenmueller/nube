@@ -16,7 +16,6 @@ package cmd
 
 import (
 	"fmt"
-	"os"
 	"strings"
 
 	"github.com/svenmueller/nube/common"
@@ -43,7 +42,7 @@ var RootCmd = &cobra.Command{
 func Execute() {
 	if err := RootCmd.Execute(); err != nil {
 		fmt.Println(err)
-		os.Exit(-1)
+		common.HandleError(err, RootCmd)
 	}
 }
 
@@ -91,7 +90,6 @@ func initConfig() {
 		Cfg = viper.Sub(profile)
 	} else {
 		common.HandleError(fmt.Errorf("Profile %q not found in configuration file %q\n", profile, viper.ConfigFileUsed()), RootCmd)
-		os.Exit(1)
 	}
 
 	Cfg.BindPFlag("output", RootCmd.PersistentFlags().Lookup("output"))

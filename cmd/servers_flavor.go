@@ -18,7 +18,7 @@ import "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra
 
 var servers_flavorCmd = &cobra.Command{
 	Use:   "flavor",
-	Short: "Access cloud server flavors",
+	Short: "Cloud server flavor commands",
 }
 
 func init() {
