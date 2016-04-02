@@ -18,7 +18,7 @@ import "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra
 
 var serversCmd = &cobra.Command{
 	Use:   "servers",
-	Short: "Manage Rackspace Cloud Server resources",
+	Short: "Rackspace Cloud Server commands",
 }
 
 func init() {

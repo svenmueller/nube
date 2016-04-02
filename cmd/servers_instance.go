@@ -18,7 +18,7 @@ import "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra
 
 var servers_instanceCmd = &cobra.Command{
 	Use:   "instance",
-	Short: "Manage cloud server instances",
+	Short: "Cloud server instance commands",
 }
 
 func init() {

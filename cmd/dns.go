@@ -18,7 +18,7 @@ import "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra
 
 var dnsCmd = &cobra.Command{
 	Use:   "dns",
-	Short: "Manage AWS Route53 DNS resources",
+	Short: "AWS Route53 DNS commands",
 }
 
 func init() {

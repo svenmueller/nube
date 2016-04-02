@@ -16,11 +16,11 @@ package cmd
 
 import "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra"
 
-var dns_recordsCmd = &cobra.Command{
-	Use:   "records",
-	Short: "Resource record set commands",
+var servers_imageCmd = &cobra.Command{
+	Use:   "image",
+	Short: "Cloud server image commands",
 }
 
 func init() {
-	dnsCmd.AddCommand(dns_recordsCmd)
+	serversCmd.AddCommand(servers_imageCmd)
 }
