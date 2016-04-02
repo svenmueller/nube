@@ -125,11 +125,11 @@ The nube CLI supports named profiles stored in the config files. You can configu
 The following example shows a config file with two profiles:
 ```yaml
 default:
-  ...
-  ...
+  username: homer.simpson.dev
+  password: 3342h3c23423423
 production:
-  ...
-  ...
+  username: homer.simpson.prod
+  password: dfsfw4534534534
 ```
 
 To use a named profile, add the `--profile` option to your command. The following example lists server instances using the `production` profile from example above.
