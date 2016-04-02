@@ -8,13 +8,13 @@
 
 Using `go get`:
 
-```
+```bash
 $ go get github.com/svenmueller/nube
 ```
 
 Or clone and build yourself:
 
-```
+```bash
 $ git clone
 $ go get
 ```
@@ -26,13 +26,13 @@ docker run --rm -v ~/.nube.yaml:/root/.nube.yaml svenmueller/nube
 ```
 
 Set an alias for repeated calls
-```
+```bash
 alias nube='docker run --rm -v ~/.nube.yaml:/root/.nube.yaml svenmueller/nube'
 ```
 
 ## Usage
 
-```
+```bash
 Manage Rackspace and AWS resources
 
 Usage:
@@ -43,10 +43,15 @@ Available Commands:
   servers     Manage Rackspace Cloud Server resources
 
 Flags:
-      --config string   config file (default is $HOME/.nube.yaml)
-  -h, --help            help for nube
-  -o, --output string   output format [yaml|json] (default "yaml")
-  -t, --toggle          Help message for toggle
+      --aws-access-key-id string       AWS Access Key ID
+      --aws-secret-access-key string   AWS Secret Access Key
+      --config string                  Configuration file (default is $HOME/.nube.yaml)
+  -h, --help                           help for nube
+  -o, --output string                  Output format [yaml|json] (default "yaml")
+      --profile string                 Profile name.  (default "default")
+      --rackspace-api-key string       Rackspace API key
+      --rackspace-region string        Rackspace region name (default "LON")
+      --rackspace-username string      Rackspace API username
 
 Use "nube [command] --help" for more information about a command.
 ```
