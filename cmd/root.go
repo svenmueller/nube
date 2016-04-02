@@ -67,8 +67,6 @@ func init() {
 	// aws
 	RootCmd.PersistentFlags().StringP("aws-access-key-id", "", "", "AWS Access Key ID")
 	RootCmd.PersistentFlags().StringP("aws-secret-access-key", "", "", "AWS Secret Access Key")
-
-	RootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
 // initConfig reads in config file and ENV variables if set.
