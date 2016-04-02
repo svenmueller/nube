@@ -90,7 +90,7 @@ func initConfig() {
 	if viper.IsSet(profile) {
 		Cfg = viper.Sub(profile)
 	} else {
-		common.HandleError(fmt.Errorf("Profile %q not found in configuration file %q\n", profile, cfgFile), RootCmd)
+		common.HandleError(fmt.Errorf("Profile %q not found in configuration file %q\n", profile, viper.ConfigFileUsed()), RootCmd)
 		os.Exit(1)
 	}
 
