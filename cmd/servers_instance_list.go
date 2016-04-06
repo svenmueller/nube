@@ -62,10 +62,10 @@ func serversInstanceList(cmd *cobra.Command, args []string) error {
 
 		cliOut := util.NewCLIOutput()
 		defer cliOut.Flush()
-		cliOut.Header("ID", "Name", "Status")
+		cliOut.Header("ID", "Name", "Status", "Created")
 		for _, server := range serverList {
-			cliOut.Writeln("%s\t%s\t%s\n",
-				server.ID, server.Name, server.Status)
+			cliOut.Writeln("%s\t%s\t%s\t%s\n",
+				server.ID, server.Name, server.Status, server.Created)
 		}
 		return true, nil
 	})
