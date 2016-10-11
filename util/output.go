@@ -8,7 +8,7 @@ import (
 	"strings"
 	"text/tabwriter"
 
-	"github.com/svenmueller/nube/Godeps/_workspace/src/gopkg.in/yaml.v1"
+	"gopkg.in/yaml.v1"
 )
 
 type CLIOutput struct {

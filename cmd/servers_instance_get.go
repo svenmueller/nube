@@ -17,8 +17,8 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/openstack/compute/v2/servers"
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra"
+	"github.com/rackspace/gophercloud/openstack/compute/v2/servers"
+	"github.com/spf13/cobra"
 	"github.com/svenmueller/nube/common"
 	"github.com/svenmueller/nube/util"
 )

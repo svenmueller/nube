@@ -1,10 +1,10 @@
 package util
 
 import (
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud"
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/openstack/compute/v2/servers"
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/pagination"
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/rackspace/gophercloud/rackspace"
+	"github.com/rackspace/gophercloud"
+	"github.com/rackspace/gophercloud/openstack/compute/v2/servers"
+	"github.com/rackspace/gophercloud/pagination"
+	"github.com/rackspace/gophercloud/rackspace"
 )
 
 func newRackspaceProviderClient(username string, apiKey string) (*gophercloud.ProviderClient, error) {

@@ -17,8 +17,8 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/aws/aws-sdk-go/service/route53"
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra"
+	"github.com/aws/aws-sdk-go/service/route53"
+	"github.com/spf13/cobra"
 	"github.com/svenmueller/nube/common"
 	"github.com/svenmueller/nube/util"
 )

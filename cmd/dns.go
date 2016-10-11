@@ -14,7 +14,7 @@
 
 package cmd
 
-import "github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra"
+import "github.com/spf13/cobra"
 
 var dnsCmd = &cobra.Command{
 	Use:   "dns",

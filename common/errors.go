@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/fatih/color"
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra"
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/viper"
+	"github.com/fatih/color"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 //MissingArgumentsError is an error returned if there are too few arguments for a command.

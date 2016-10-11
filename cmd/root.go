@@ -20,8 +20,8 @@ import (
 
 	"github.com/svenmueller/nube/common"
 
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/cobra"
-	"github.com/svenmueller/nube/Godeps/_workspace/src/github.com/spf13/viper"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var cfgFile string
