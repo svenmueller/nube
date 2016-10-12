@@ -76,9 +76,9 @@ $ nube servers instance create server1 server2 server3
 ```bash
 # Create 1 server instance using custom flavor/image and user-data file
 $ nube servers instance create server1 \
---flavor "2 GB Performance" \
---image "Ubuntu 14.04 LTS (Trusty Tahr) (PVHVM)" \
---user-data-file cloud-config.yaml
+--flavor="2 GB Performance" \
+--image="Ubuntu 14.04 LTS (Trusty Tahr) (PVHVM)" \
+--user-data-file=cloud-config.yaml
 ```
 
 ```bash
