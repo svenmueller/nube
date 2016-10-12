@@ -54,7 +54,7 @@ func init() {
 
 	servers_instance_createCmd.Flags().StringP("domain", "d", "ct-app.com", "Domain name to append to the hostname (e.g. server01.example.com)")
 	servers_instance_createCmd.Flags().BoolP("add-random-name", "n", true, "Append random name to server name (e.g. server01-adjective-surname)")
-	servers_instance_createCmd.Flags().BoolP("add-region", "r", true, "Append region to hostname (e.g. server01.lon)")
+	servers_instance_createCmd.Flags().BoolP("add-region", "r", false, "Append region to hostname (e.g. server01.lon)")
 	servers_instance_createCmd.Flags().StringP("user-data", "u", "", "User data for creating server")
 	servers_instance_createCmd.Flags().StringP("user-data-file", "p", "", "A path to a file for user data")
 	servers_instance_createCmd.Flags().StringP("flavor", "f", "1 GB Performance", "Flavor of server")
